@@ -1,0 +1,47 @@
+.\" Man page for your_shell
+.TH HOLBERTON_SHELL 1 "December 2023" "Version 1.0" "User Commands"
+
+.SH NAME
+holberton_shell \- shell.
+
+.SH SYNOPSIS
+.B holberton_shell
+[\fIOPTION\fR] \fICOMMAND\fR [\fIARGUMENTS\fR]
+
+.SH DESCRIPTION
+It can run programs with arguments.
+
+.SH OPTIONS
+.IP "\fB-h, --help\fR"
+Display help message and exit.
+.IP "\fB-v, --version\fR"
+Display version information and exit.
+
+.SH COMMANDS
+.IP "\fBCOMMAND1\fR"
+A description of the first command supported by your shell.
+.IP "\fBCOMMAND2\fR"
+A description of the second command.
+
+.SH INTERACTIVE MODE
+You can use it in interactive mode.
+
+.SH SCRIPTING
+You can use it for scripting.
+
+.SH ENVIRONMENT VARIABLES
+
+
+.SH EXIT STATUS
+
+
+.SH BUGS
+
+.SH SEE ALSO
+
+.SH AUTHOR
+Nihad Goylerov, Neriman Aliyev, Kenan Mirzazade
+.SH REPORTING BUGS
+
+.SH COPYRIGHT
+Copyright (C) 2023 Holberto. This is free software; see the source for copying conditions. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
