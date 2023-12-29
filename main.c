@@ -10,13 +10,13 @@
 int main() {
     char *input_data = NULL;
     size_t input_size = 0;
-    size_t i;
-    char *token;
 
     while (1) {
         char *args[MAX_ARGS];
         size_t arg_count = 0;
         pid_t pid;
+
+        char *token;
 
         printf("%c ", '$');
 
@@ -55,14 +55,14 @@ int main() {
             wait(NULL);
 
             /* Free memory allocated for arguments */
-            for (i = 0; i < arg_count; i++) {
+            for (size_t i = 0; i < arg_count; i++) {
                 free(args[i]);
             }
+
+            /* Free memory allocated for input_data */
+            free(input_data);
         }
     }
-
-    /* Free the memory allocated by getline */
-    free(input_data);
 
     return 0;
 }
