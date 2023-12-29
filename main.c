@@ -10,8 +10,14 @@
 int main() {
     char *input_data = NULL;
     size_t input_size = 0;
+    size_t i;
+    char *token;
 
     while (1) {
+        char *args[MAX_ARGS];
+        size_t arg_count = 0;
+        pid_t pid;
+
         printf("%c ", '$');
 
         /* Read input */
@@ -23,9 +29,7 @@ int main() {
         input_data[strcspn(input_data, "\n")] = '\0';
 
         /* Tokenize input into arguments */
-        char *args[MAX_ARGS];
-        size_t arg_count = 0;
-        char *token = strtok(input_data, " ");
+        token = strtok(input_data, " ");
         
         while (token != NULL && arg_count < MAX_ARGS - 1) {
             args[arg_count++] = strdup(token);
@@ -35,7 +39,7 @@ int main() {
         args[arg_count] = NULL; /* Ensure the last element is NULL */
 
         /* Fork and execute command */
-        pid_t pid = fork();
+        pid = fork();
 
         if (pid < 0) {
             perror("Fork fail");
@@ -51,7 +55,7 @@ int main() {
             wait(NULL);
 
             /* Free memory allocated for arguments */
-            for (size_t i = 0; i < arg_count; i++) {
+            for (i = 0; i < arg_count; i++) {
                 free(args[i]);
             }
         }
