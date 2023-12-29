@@ -10,6 +10,7 @@
 int main() {
     char *input_data = NULL;
     size_t input_size = 0;
+    size_t i;
 
     while (1) {
         char *args[MAX_ARGS];
@@ -55,7 +56,7 @@ int main() {
             wait(NULL);
 
             /* Free memory allocated for arguments */
-            for (size_t i = 0; i < arg_count; i++) {
+            for (i = 0; i < arg_count; i++) {
                 free(args[i]);
             }
 
