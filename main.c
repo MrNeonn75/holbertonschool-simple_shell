@@ -1,67 +1,49 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-#define MAX_ARGS 64
+#include "main.h"
 
 int main() {
-    char *input_data = NULL;
-    size_t input_size = 0;
-    size_t i;
+    char *line;
+    char **tokens;
+    pid_t p;
 
     while (1) {
-        char *args[MAX_ARGS];
-        size_t arg_count = 0;
-        pid_t pid;
+        p = fork();
 
-        char *token;
-
-        printf("%c ", '$');
-
-        /* Read input */
-        if (getline(&input_data, &input_size, stdin) == -1) {
-            exit(EXIT_FAILURE);
-        }
-
-        /* Remove the newline character from input_data */
-        input_data[strcspn(input_data, "\n")] = '\0';
-
-        /* Tokenize input into arguments */
-        token = strtok(input_data, " ");
-        
-        while (token != NULL && arg_count < MAX_ARGS - 1) {
-            args[arg_count++] = strdup(token);
-            token = strtok(NULL, " ");
-        }
-
-        args[arg_count] = NULL; /* Ensure the last element is NULL */
-
-        /* Fork and execute command */
-        pid = fork();
-
-        if (pid < 0) {
+        if (p < 0) {
             perror("Fork fail");
             exit(EXIT_FAILURE);
-        } else if (pid == 0) {
+        } else if (p == 0) {
             /* Child process */
-            if (execvp(args[0], args) == -1) {
-                perror("Command execution failed");
+            line = _getline();
+            if (line == NULL) {
+                /* Handle case where _getline returns NULL (EOF or empty line) */
+                exit(EXIT_SUCCESS); /* Exit the child process gracefully */
+            }
+
+            tokens = _strtok(line);
+
+            if (tokens == NULL || tokens[0] == NULL) {
+                fprintf(stderr, "Tokenization error\n");
+                exit(EXIT_FAILURE);
+            }
+
+            /* Execute the command in the child process */
+            if (execvp(tokens[0], tokens) == -1) {
+                perror("The command not found");
                 exit(EXIT_FAILURE);
             }
         } else {
             /* Parent process */
-            wait(NULL);
+            int status;
+            waitpid(p, &status, 0);
 
-            /* Free memory allocated for arguments */
-            for (i = 0; i < arg_count; i++) {
-                free(args[i]);
+            /* Check if the child process terminated normally */
+            if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+                fprintf(stderr, "Child process exited with non-zero status: %d\n", WEXITSTATUS(status));
             }
 
-            /* Free memory allocated for input_data */
-            free(input_data);
+            /* Free allocated memory in the parent process */
+            
+            
         }
     }
 
