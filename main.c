@@ -1,40 +1,31 @@
 #include "main.h"
-
 /**
- * main - creates a prompt that reads input, sparses it, executes and waits
- * for another command unless told to exit
- * @argc: number of arguemnets
- * @argv: array of arguements
- * @env: environment variable
- * Return: EXIT_SUCCESS
+ * main - main func
+ *
+ * Return: int
  */
-int main(int argc __attribute__((unused)), char **argv, char **env)
+int main(void)
 {
-	char *line;
-	char **args, **path;
-	int count = 0, status = 0;
-	(void) argv;
-	signal(SIGINT, handle_signal);
+	char *command;
+	int status;
+	
 	while (1)
 	{
-		prompt();
-		/*read input and return string*/
-		line = read_input();
-		/*separates string to get command and atgs*/
-		args = sparse_str(line, env);
-
-		if ((_strcmp(args[0], "\n") != 0) && (_strcmp(args[0], "env") != 0))
+		if (isatty(STDIN_FILENO))
+			printf("$ ");
+		command = _getline();
+		if (command == NULL)
+			break;
+		if (strcmp(command, "exit") == 0)
 		{
-			count += 1;
-			path = search_path(env); /*busca PATH en la variable environ*/
-			status = _stat(args, path);
-			child_process(argv, args, env, status, count);
+			free(command);
+			exit(0);
 		}
-		else
+		status = execute(command);
+		if (status == 2)
 		{
-			free(args);
+			exit(2);
 		}
-		free(line);
 	}
-	return (EXIT_SUCCESS);
+	return (status);
 }
