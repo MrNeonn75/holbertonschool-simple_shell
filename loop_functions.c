@@ -74,10 +74,9 @@ char **sparse_str(char *line, char **env)
 	if (tokens[0] == NULL)
 		tokens[posicion] = "\n";
 
-	
 	if ((_strcmp(tokens[0], "exit") == 0) && tokens[1] == NULL)
 	{
-		free(line); 
+		free(line);
 		free(tokens);
 		exit(0);
 	}
