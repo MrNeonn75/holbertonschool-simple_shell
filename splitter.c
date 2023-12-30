@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * line_div - Splits given string into parts
+ * line_div - Splits given string into parts.
  * @cmd: The command string to parse.
  * @arr: An array of strings to store the arguments.
  * Return: modified char array.
