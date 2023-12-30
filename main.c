@@ -7,7 +7,7 @@ int main(void)
 {
 	char *cmd;
 	int status;
-	
+
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
