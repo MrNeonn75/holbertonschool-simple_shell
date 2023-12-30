@@ -66,9 +66,9 @@ int child_process(char **av, char **args, char **env, int status_main, int cnt)
 		{
 			_error(av[0], cnt, args[0]);
 			free(args);
-			exit(2);
+			exit(1);
 		}
-		exit(0);
+		exit(2);
 	}
 	else
 	{
