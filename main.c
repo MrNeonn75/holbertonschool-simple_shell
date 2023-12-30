@@ -1,27 +1,26 @@
 #include "main.h"
 /**
- * main - main func
- *
- * Return: int
+ * main - Main function.
+ * Return: status
  */
 int main(void)
 {
-	char *command;
+	char *cmd;
 	int status;
 	
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
-		command = _getline();
-		if (command == NULL)
+		cmd = _getline();
+		if (cmd == NULL)
 			break;
-		if (strcmp(command, "exit") == 0)
+		if (strcmp(cmd, "exit") == 0)
 		{
-			free(command);
+			free(cmd);
 			exit(0);
 		}
-		status = execute(command);
+		status = execute(cmd);
 		if (status == 2)
 		{
 			exit(2);

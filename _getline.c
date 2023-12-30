@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * _getline - delimited string input
+ * _getline - Get command
  * Return: NULL
  */
 char *_getline(void)

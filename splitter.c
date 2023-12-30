@@ -1,18 +1,16 @@
 #include "main.h"
 /**
- * line_div - splits given string into parts
- *
- * @command: The command string to parse.
- * @arr: An array of strings to store the parsed arguments.
- *
+ * line_div - Splits given string into parts
+ * @cmd: The command string to parse.
+ * @arr: An array of strings to store the arguments.
  * Return: modified char array.
  */
-char **line_div(char *command,char **arr)
+char **line_div(char *cmd,char **arr)
 {
 	char *token;
 	int i = 0;
 
-	token = strtok(command, " \n\t");
+	token = strtok(cmd, " \n\t");
 	while (token != NULL && i < 63)
 	{
 		arr[i++] = token;
