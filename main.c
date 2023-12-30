@@ -1,51 +1,40 @@
 #include "main.h"
 
-int main() {
-    char *line;
-    char **tokens;
-    pid_t p;
+/**
+ * main - creates a prompt that reads input, sparses it, executes and waits
+ * for another command unless told to exit
+ * @argc: number of arguemnets
+ * @argv: array of arguements
+ * @env: environment variable
+ * Return: EXIT_SUCCESS
+ */
+int main(int argc __attribute__((unused)), char **argv, char **env)
+{
+	char *line;
+	char **args, **path;
+	int count = 0, status = 0;
+	(void) argv;
+	signal(SIGINT, handle_signal);
+	while (1)
+	{
+		prompt();
+		/*read input and return string*/
+		line = read_input();
+		/*separates string to get command and atgs*/
+		args = sparse_str(line, env);
 
-    while (1) {
-        p = fork();
-
-        if (p < 0) {
-            perror("Fork fail");
-            exit(EXIT_FAILURE);
-        } else if (p == 0) {
-            /* Child process */
-            line = _getline();
-            if (line == NULL) {
-                /* Handle case where _getline returns NULL (EOF or empty line) */
-                exit(EXIT_SUCCESS); /* Exit the child process gracefully */
-            }
-
-            tokens = _strtok(line);
-
-            if (tokens == NULL || tokens[0] == NULL) {
-                fprintf(stderr, "Tokenization error\n");
-                exit(EXIT_FAILURE);
-            }
-
-            /* Execute the command in the child process */
-            if (execvp(tokens[0], tokens) == -1) {
-                perror("The command not found");
-                exit(EXIT_FAILURE);
-            }
-        } else {
-            /* Parent process */
-            int status;
-            waitpid(p, &status, 0);
-
-            /* Check if the child process terminated normally */
-            if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
-                fprintf(stderr, "Child process exited with non-zero status: %d\n", WEXITSTATUS(status));
-            }
-
-            /* Free allocated memory in the parent process */
-            
-            
-        }
-    }
-
-    return 0;
+		if ((_strcmp(args[0], "\n") != 0) && (_strcmp(args[0], "env") != 0))
+		{
+			count += 1;
+			path = search_path(env); /*busca PATH en la variable environ*/
+			status = _stat(args, path);
+			child_process(argv, args, env, status, count);
+		}
+		else
+		{
+			free(args);
+		}
+		free(line);
+	}
+	return (EXIT_SUCCESS);
 }
