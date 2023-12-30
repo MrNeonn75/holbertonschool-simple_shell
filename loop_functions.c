@@ -78,7 +78,7 @@ char **sparse_str(char *line, char **env)
 	{
 		free(line);
 		free(tokens);
-		exit(2);
+		exit(0);
 	}
 	if ((_strcmp(tokens[0], "env") == 0) && tokens[1] == NULL)
 		func_printenv(env);      /*Encuentra el enviroment*/
