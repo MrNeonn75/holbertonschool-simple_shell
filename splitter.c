@@ -5,7 +5,7 @@
  * @arr: An array of strings to store the arguments.
  * Return: modified char array.
  */
-char **line_div(char *cmd,char **arr)
+char **line_div(char *cmd, char **arr)
 {
 	char *token;
 	int i = 0;
