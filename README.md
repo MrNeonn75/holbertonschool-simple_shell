@@ -1,7 +1,7 @@
 # Simple Shell
 
 ### Introduction
-This repository is a [Holberton School](https://www.holbertonschool.com/) Project. The school project consisted in writing a shell like sh (Bourne Shell) by Stephen Bourne  , in *C*, using a limited number of standard library functions, So Instead we used ower own function that we rewrited over the past three month [Here](https://github.com/Theemiss/holbertonschool-low_level_programming/)
+This repository is a [Holberton School](https://www.holbertonschool.com/) Project. The school project consisted in writing a shell like sh (Bourne Shell) by Stephen Bourne  , in *C*, using a limited number of standard library functions, So Instead we used ower own function that we rewrited over the past three month [Here](https://github.com/MrNeonn75/holbertonschool-low_level_programming/)
 
 <p align="center">
 <img src="https://apply.holbertonschool.com/holberton-logo.png" width="750" height="300">
